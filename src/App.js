@@ -58,7 +58,7 @@ axios.get(endPoint + new URLSearchParams(parameters))
 initMap = () => {
         const map = new window.google.maps.Map(document.getElementById('map'), {
             center: { lat: 19.8968, lng: -155.5828 },
-            zoom: 10
+            zoom: 10.5
         });
         //https://developers.google.com/maps/documentation/javascript/markers
 
@@ -68,12 +68,13 @@ initMap = () => {
 
         this.state.Locations.forEach(location => {
             let marker = new window.google.maps.Marker({
-                title: location.venue.name,
+                title: location.venue.name, 
                 position: {
                     lat: location.venue.location.lat,
                     lng: location.venue.location.lng
                 },
-                map: map
+                map: map,
+                animation: window.google.maps.Animation.DROP,
             });
             //push the marker to our array of markers
             markers.push(marker);
@@ -104,6 +105,9 @@ initMap = () => {
       <div className="App">
       <Header/>
       <Content/>
+      <List locations={this.state.Locations} />
+
+
      
      
 
@@ -119,7 +123,7 @@ initMap = () => {
 export default App;
 
 
-//credit : learned this from Yahya Elharony walk through : https://www.youtube.com/watch?v=W5LhLZqj76s&t=615s and this also helped: https://stackoverflow.com/questions/7718935/load-scripts-asynchronously
+///credit : learned this from Yahya Elharony walk through : https://www.youtube.com/watch?v=W5LhLZqj76s&t=615s and this also helped: https://stackoverflow.com/questions/7718935/load-scripts-asynchronously
 function loadScript(url){
       var index = window.document.getElementsByTagName("script")[0];
       var script = window.document.createElement("script");
