@@ -17,7 +17,7 @@ class  List extends React.Component{
      <input type="text"/>
     <ol>
 {
-  this.porps.locations.map(loc => {
+  this.props.locations.map(loc => {
 
       return ( <li key= {loc.venue.id}>
     <div>
