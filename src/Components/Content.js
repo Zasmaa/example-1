@@ -45,7 +45,6 @@ axios.get(endPoint + new URLSearchParams(parameters))
    	console.log(this.state.Locations)
     return (
      <div className="Content">
-      <List Locations={this.state.Locations}/>
      <Map/>
 
      </div>
