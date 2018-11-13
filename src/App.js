@@ -69,6 +69,7 @@ initMap = () => {
         this.state.Locations.forEach(location => {
             let marker = new window.google.maps.Marker({
                 title: location.venue.name, 
+                locations: location.venue.location.address,
                 position: {
                     lat: location.venue.location.lat,
                     lng: location.venue.location.lng
@@ -86,7 +87,7 @@ initMap = () => {
         function populateInfoWindow(marker, infowindow) {
             if (infowindow.marker !== marker) {
                 infowindow.marker = marker;
-                infowindow.setContent('<div>' + marker.title + '</div');
+                infowindow.setContent('<div>' + marker.title +  marker.locations + '</div');
                 infowindow.open(map, marker);
                 //
                 infowindow.addListener('click', function() {
