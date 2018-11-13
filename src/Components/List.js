@@ -22,20 +22,7 @@ class  List extends React.Component{
     	 <Menu name={ 'Locations' }/>
 
     	 <Menu width={ '20%' }/>
-    	  <ol>
-{
-  this.locations.map(loc => {
-
-    return ( <li key= {loc.venue.id}>
-    <div>
-    <p> Name: {loc.venue.name}</p>
-
-    </div>
-    </li>)
-  })
-}
-
-     </ol>
+    	 
 
     	
     	   
