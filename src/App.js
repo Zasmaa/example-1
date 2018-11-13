@@ -65,11 +65,13 @@ initMap = () => {
         const Infowindow = new window.google.maps.InfoWindow();
 
         let markers = [];
+        //
 
         this.state.Locations.forEach(location => {
             let marker = new window.google.maps.Marker({
                 title: location.venue.name, 
-                locations: location.venue.location.address,
+                //used terinary to check if address is available. if address undefined then it display not available.
+               location: location.venue.location.address ? location.venue.location.address : 'Address not available',
                 position: {
                     lat: location.venue.location.lat,
                     lng: location.venue.location.lng
@@ -87,7 +89,7 @@ initMap = () => {
         function populateInfoWindow(marker, infowindow) {
             if (infowindow.marker !== marker) {
                 infowindow.marker = marker;
-                infowindow.setContent('<div>' + marker.title +  marker.locations + '</div');
+                infowindow.setContent('<div>' + marker.title +  marker.location + '</div');
                 infowindow.open(map, marker);
                 //
                 infowindow.addListener('click', function() {
