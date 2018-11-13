@@ -11,7 +11,9 @@ class App extends Component {
 
   state = {
     Locations : [],
-    marker: []
+    marker: [],
+    allLocations: [],
+    query: "",
   }
    
  componentDidMount() {
@@ -89,7 +91,10 @@ initMap = () => {
         function populateInfoWindow(marker, infowindow) {
             if (infowindow.marker !== marker) {
                 infowindow.marker = marker;
-                infowindow.setContent('<div>' + marker.title +  marker.location + '</div');
+                infowindow.setContent(`
+
+                  '<div>'  
+                  <p>${marker.title} </p><p> ${marker.location} </p>  '</div'`);
                 infowindow.open(map, marker);
                 //
                 infowindow.addListener('click', function() {
@@ -99,16 +104,60 @@ initMap = () => {
         }
     };
 
+ 
+handleClick = (location) => {
+  this.props.markers.forEach(marker => {
+    if (window.marker.title === Location.venue.id){
+      let content = this.prepareContent(location);
+      window.infowindow.setContent(content);
+      window.infowindow.open(window.map, marker);
+     
+    }
+  })
+}
+ prepareContent = location => {
+  return ` <div>
+                                    <p className="title"> 
+                                    Name: <a href="#">{location.venue.name}</a>
+                                    </p>
+                                    <p> Address: {location.venue.location.address }</p>
 
+                                </div>  
+                   `
+ }
+upateQuery = query => {
+  this.setState({query})
+  if(query){
+    this.setState({
+      locations: this.filterLocations(query, this.state.locations)
+    })
+  }else{
+    this.setState({locations: this.setState.allLocations})
+  }
+}
+filterLocations = ( query) =>{
+  return locations.filter(locations => 
+
+    location.name.toLowerCase().includes(query.toLowerCase()))
+
+}
 
 
   render() {
+    console.log(this.state.Locations);
     return (
 
       <div className="App">
+      <List locations={this.state.Locations}
+      showInfoContent={this.handleClick}
+      queryString={this.state.query}
+      handleChange={this.upateQuery}
+       />
+      }
+      }
       <Header/>
       <Content/>
-      <List locations={this.state.Locations} />
+      
 
 
      
