@@ -105,26 +105,7 @@ initMap = () => {
     };
 
  
-handleClick = (location) => {
-  this.props.markers.forEach(marker => {
-    if (window.marker.title === Location.venue.id){
-      let content = this.prepareContent(location);
-      window.infowindow.setContent(content);
-      window.infowindow.open(window.map, marker);
-     
-    }
-  })
-}
- prepareContent = location => {
-  return ` <div>
-                                    <p className="title"> 
-                                    Name: <a href="#">{location.venue.name}</a>
-                                    </p>
-                                    <p> Address: {location.venue.location.address }</p>
 
-                                </div>  
-                   `
- }
 upateQuery = query => {
   this.setState({query})
   if(query){
@@ -149,7 +130,6 @@ filterLocations = ( query) =>{
 
       <div className="App">
       <List locations={this.state.Locations}
-      showInfoContent={this.handleClick}
       queryString={this.state.query}
       handleChange={this.upateQuery}
        />
