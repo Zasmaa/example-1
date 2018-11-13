@@ -9,7 +9,6 @@ class  List extends React.Component{
 
 
 
-
   
 
 	
@@ -17,33 +16,22 @@ class  List extends React.Component{
 
 
 	 render() {
-    return (
-    	 <div className="List">
-    	 <Menu name={ 'Locations' }/>
-
-    	 <Menu width={ '20%' }/>
-    	 
-
-    	
-    	   
-
-
-    	 
-
 
     
-   
-    
+    return(
+    	<div> 
+    	const lists = this.locations.map(loc=>{
+      return( <li key={loc.venue.id}
+        className="List">
+        {List.name}
+</li>
 
+        )
+     })
      </div>
-      
-    );
+
+
+    )
   }
 
 }
-
-
-
-
-
-export default List;
