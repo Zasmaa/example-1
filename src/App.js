@@ -106,22 +106,26 @@ initMap = () => {
 
  
 
-upateQuery = query => {
+upateQuery = query =>{
   this.setState({query})
-  if(query){
-    this.setState({
-      locations: this.filterLocations(query, this.state.locations)
-    })
+  if (query) {
+    this.setState({locations: this.filterLocations(query, this.state.locations)})
   }else{
-    this.setState({locations: this.setState.allLocations})
+    this.setState({locations:this.setState.allLocations})
   }
-}
-filterLocations = ( query) =>{
-  return locations.filter(locations => 
+ }
 
-    location.name.toLowerCase().includes(query.toLowerCase()))
+ filterLocations = (query) => {
+  if (this.state.query === '' || this.state.query === undefined) {
+ return this.state.Locations.filter(location => {
+  console.log(location.name)
+    location.name.toLowerCase().includes(query.toLowerCase())
+  })
 
-}
+  }
+ 
+
+ }
 
 
   render() {
