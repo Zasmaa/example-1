@@ -12,8 +12,9 @@ class App extends Component {
   state = {
     Locations : [],
     marker: [],
-    allLocations: [],
     query: "",
+     allLocations: [],
+ 
   }
    
  componentDidMount() {
@@ -45,11 +46,12 @@ getLocations =() =>{
 axios.get(endPoint + new URLSearchParams(parameters))
   .then(response => {
    this.setState({
-    Locations: response.data.response.groups[0].items
+    Locations: response.data.response.groups[0].items,
+     allLocations: response.data.response.groups[0].items
    }, this.loadMap ())
   })
   .catch(error => {
-    console.log(error);
+    alert(error);
   });
 }
 
@@ -104,9 +106,32 @@ initMap = () => {
         }
     };
 
- 
 
-upateQuery = query =>{
+///credit : learned this from   kenjournal walk through: https://www.youtube.com/watch?v=kadSBAsjDXI
+handleClick = (location) => { 
+  this.props.markers.forEach(marker => {  
+    if (window.marker.title === Location.venue.id){ 
+      let content = this.prepareContent(location);  
+      window.infowindow.setContent(content);  
+      window.infowindow.open(window.map, marker); 
+      
+    } 
+  })  
+} 
+ prepareContent = location => { 
+  return ` <div>  
+                                    <p className="title">   
+                                    Name: <a href="#">{location.venue.name}</a> 
+                                    </p>  
+                                    <p> Address: {location.venue.location.address }</p> 
+                                 </div>   
+                   `  
+ }
+
+
+
+
+ upateQuery = query =>{
   this.setState({query})
   if (query) {
     this.setState({locations: this.filterLocations(query, this.state.locations)})
@@ -115,30 +140,31 @@ upateQuery = query =>{
   }
  }
 
- filterLocations = (query) => {
-  if (this.state.query === '' || this.state.query === undefined) {
- return this.state.Locations.filter(location => {
-  console.log(location.name)
-    location.name.toLowerCase().includes(query.toLowerCase())
-  })
-
-  }
- 
-
+ filterLocations =(query, locations) => {
+  return this.state.Locations.filter(location => location.venue.name.toLowerCase().includes(query.toLowerCase()))
  }
+
+
+
+   
+
+
 
 
   render() {
     console.log(this.state.Locations);
+
     return (
 
       <div className="App">
+
       <List locations={this.state.Locations}
+       showInfoContent={this.handleClick}
+
       queryString={this.state.query}
       handleChange={this.upateQuery}
        />
-      }
-      }
+     
       <Header/>
       <Content/>
       
