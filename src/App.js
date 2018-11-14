@@ -109,7 +109,8 @@ initMap = () => {
 
 ///credit : learned this from   kenjournal walk through: https://www.youtube.com/watch?v=kadSBAsjDXI
 handleClick = (location) => { 
-  this.props.markers.forEach(marker => {  
+  this.state.markers.forEach(marker => {  
+
     if (window.marker.title === Location.venue.id){ 
       let content = this.prepareContent(location);  
       window.infowindow.setContent(content);  
@@ -143,6 +144,7 @@ handleClick = (location) => {
  filterLocations =(query, locations) => {
   return this.state.Locations.filter(location => location.venue.name.toLowerCase().includes(query.toLowerCase()))
  }
+ 
 
 
 
