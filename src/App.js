@@ -10,7 +10,7 @@ import List from './Components/List'
 class App extends Component {
 
   state = {
-    Locations : [],
+    locations : [],
     markers: [],
     query: "",
      allLocations: [],
@@ -46,7 +46,7 @@ getLocations =() =>{
 axios.get(endPoint + new URLSearchParams(parameters))
   .then(response => {
    this.setState({
-    Locations: response.data.response.groups[0].items,
+    locations: response.data.response.groups[0].items,
      allLocations: response.data.response.groups[0].items,
      markers: response.data.response.groups[0].items,
    }, this.loadMap ())
@@ -72,7 +72,7 @@ initMap = () => {
         let markers = [];
         //
 
-        this.state.Locations.forEach(location => {
+        this.state.locations.forEach(location => {
             let marker = new window.google.maps.Marker({
                 title: location.venue.name, 
                 //used terinary to check if address is available. if address undefined then it display not available.
@@ -86,12 +86,14 @@ initMap = () => {
             });
             //push the marker to our array of markers
             markers.push(marker);
+
+
             // create an onclick event to open an infowindow at each marker.
             marker.addListener('click', function() {
 
               if(marker.getAnimation() !== null) {marker.setAnimation(null);}
               else{marker.setAnimation(window.google.maps.Animation.BOUNCE);}
-              setTimeout(() => {marker.setAnimation(null)}, 1500);
+              setTimeout(() => {marker.setAnimation(null)}, 1600);
                 populateInfoWindow(this, Infowindow);
             });
         });
@@ -109,18 +111,25 @@ initMap = () => {
                 });
             }
         }
+
+        
+        
     };
 
 
+
+
+
+
 ///credit : learned this from   kenjournal walk through: https://www.youtube.com/watch?v=kadSBAsjDXI
-handleClick = (location) => { 
+handleClick = location => { 
   this.state.markers.forEach(marker => {  
 
 
-    if (window.marker.venue.title === Location.venue.id){ 
-      let content = this.prepareContent(location);  
-      window.infowindow.setContent(content);  
-      window.infowindow.open(window.map, marker); 
+
+    if (marker.venue.id === location.venue.id){ 
+      
+        window.google.maps.event.trigger(marker, "click")
       
     } 
   })  
@@ -150,7 +159,8 @@ upateQuery = query =>{
  }
 
  filterLocations =(query, locations) => {
-  return this.state.Locations.filter(location => location.venue.name.toLowerCase().includes(query.toLowerCase()))
+
+  return locations.filter(location => location.venue.name.toLowerCase().includes(query.toLowerCase()))
  }
  
 
@@ -162,13 +172,13 @@ upateQuery = query =>{
 
 
   render() {
-    console.log(this.state.Locations);
+    console.log(this.state.locations);
 
     return (
 
       <div className="App">
 
-      <List locations={this.state.Locations}
+      <List locations={this.state.locations}
        showInfoContent={this.handleClick}
 
       queryString={this.state.query}
