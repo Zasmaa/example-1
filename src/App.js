@@ -11,7 +11,7 @@ class App extends Component {
 
   state = {
     Locations : [],
-    marker: [],
+    markers: [],
     query: "",
      allLocations: [],
  
@@ -47,7 +47,8 @@ axios.get(endPoint + new URLSearchParams(parameters))
   .then(response => {
    this.setState({
     Locations: response.data.response.groups[0].items,
-     allLocations: response.data.response.groups[0].items
+     allLocations: response.data.response.groups[0].items,
+     markers: response.data.response.groups[0].items,
    }, this.loadMap ())
   })
   .catch(error => {
@@ -87,6 +88,10 @@ initMap = () => {
             markers.push(marker);
             // create an onclick event to open an infowindow at each marker.
             marker.addListener('click', function() {
+
+              if(marker.getAnimation() !== null) {marker.setAnimation(null);}
+              else{marker.setAnimation(window.google.maps.Animation.BOUNCE);}
+              setTimeout(() => {marker.setAnimation(null)}, 1500);
                 populateInfoWindow(this, Infowindow);
             });
         });
@@ -111,33 +116,36 @@ initMap = () => {
 handleClick = (location) => { 
   this.state.markers.forEach(marker => {  
 
-    if (window.marker.title === Location.venue.id){ 
+
+    if (window.marker.venue.title === Location.venue.id){ 
       let content = this.prepareContent(location);  
       window.infowindow.setContent(content);  
       window.infowindow.open(window.map, marker); 
       
     } 
   })  
-} 
- prepareContent = location => { 
-  return ` <div>  
-                                    <p className="title">   
-                                    Name: <a href="#">{location.venue.name}</a> 
-                                    </p>  
-                                    <p> Address: {location.venue.location.address }</p> 
-                                 </div>   
-                   `  
- }
+}
 
 
 
 
- upateQuery = query =>{
+ 
+  prepareContent = location => {
+    return `<div tabIndex="0">
+          <h3 className="title" tabindex="0">${location.venue.name}</h3>
+          <p>${location.venue.location.address}</p>
+        </div>`;
+  };
+
+
+
+
+upateQuery = query =>{
   this.setState({query})
   if (query) {
-    this.setState({locations: this.filterLocations(query, this.state.locations)})
+    this.setState({locations: this.filterLocations(query, this.state.allLocations)})
   }else{
-    this.setState({locations:this.setState.allLocations})
+    this.setState({locations:this.state.allLocations})
   }
  }
 
