@@ -112,7 +112,7 @@ initMap = () => {
             }
         }
 
-        
+        this.setState({markers})
         
     };
 
@@ -123,28 +123,29 @@ initMap = () => {
 
 ///credit : learned this from   kenjournal walk through: https://www.youtube.com/watch?v=kadSBAsjDXI
 handleClick = location => { 
+  const {map, infowindow, markers} = this.state;
   this.state.markers.forEach(marker => {  
 
 
 
-    if (marker.venue.id === location.venue.id){ 
+    if (marker.venue.name === location){ 
       
-        window.google.maps.event.trigger(marker, "click")
+       infowindow.setContent(`<div tabIndex="0">
+          <h3 className="title" tabindex="0">${location.venue.name}</h3>
+          <p>${location.venue.location.address}</p>
+        </div>`)
+        infowindow.open(map, marker);
       
     } 
   })  
 }
 
+clickList = location
 
 
 
  
-  prepareContent = location => {
-    return `<div tabIndex="0">
-          <h3 className="title" tabindex="0">${location.venue.name}</h3>
-          <p>${location.venue.location.address}</p>
-        </div>`;
-  };
+  
 
 
 
