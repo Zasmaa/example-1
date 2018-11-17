@@ -14,6 +14,7 @@ class App extends Component {
     markers: [],
     query: "",
      allLocations: [],
+
  
   }
    
@@ -68,6 +69,10 @@ initMap = () => {
         //https://developers.google.com/maps/documentation/javascript/markers
 
         const Infowindow = new window.google.maps.InfoWindow();
+         this.setState({
+     
+      Infowindow
+    });
 
         let markers = [];
         //
@@ -124,11 +129,11 @@ initMap = () => {
 ///credit : learned this from   kenjournal walk through: https://www.youtube.com/watch?v=kadSBAsjDXI
 handleClick = location => { 
   const {map, infowindow, markers} = this.state;
+  this.setState({infowindow})
   this.state.markers.forEach(marker => {  
 
 
-
-    if (marker.venue.name === location){ 
+    if ((marker.venue && marker.venue.name === location) || (marker.title === location.venue.name)){ 
       
        infowindow.setContent(`<div tabIndex="0">
           <h3 className="title" tabindex="0">${location.venue.name}</h3>
@@ -140,7 +145,6 @@ handleClick = location => {
   })  
 }
 
-clickList = location
 
 
 
