@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Map from './Map';
 
 class Content extends React.Component {
     state = {};
 
     render() {
-        console.log(this.state.Locations);
         return (
             <div className="Content">
                 <Map />
@@ -14,4 +13,4 @@ class Content extends React.Component {
     }
 }
 
-export default Content;
+export default Content
