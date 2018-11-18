@@ -1,7 +1,7 @@
 # example-1
 Neighborhood-Map
 
-In this project, the goal was to create a map app using react app. The first thing was to obtain a Google Maps API and then add a non-google third-party API. The second thing was to add markers and info window. The last thing was to filter the list components.  
+In this project, the goal was to create a map app using react app. The first thing was to obtain a Google Maps API and then add a non-google third-party API. The second thing was to add markers and info window. The last thing was to filter the list components.  This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). 
 
 
 # Dependencies 
@@ -9,10 +9,11 @@ In this project, the goal was to create a map app using react app. The first thi
 
 •	react-burger-menu
 
-# Installation 
-•	install all project dependencies with npm install
 
-•	start the development server with npm start
+# Installation 
+•	Install all project dependencies with npm install
+
+•	Start the development server with npm start
 
 
 # Acknowledgment 
