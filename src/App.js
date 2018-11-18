@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 import Header from './Components/Header';
 import Content from './Components/Content';
-//import Map from './Components/Map';
 import List from './Components/List'
 
 class App extends Component {
@@ -22,7 +20,7 @@ class App extends Component {
  
     this.getLocations ()
     this.loadMap()
-    
+
 
 
     
@@ -69,10 +67,7 @@ initMap = () => {
         //https://developers.google.com/maps/documentation/javascript/markers
 
         const Infowindow = new window.google.maps.InfoWindow();
-         this.setState({
      
-      Infowindow
-    });
 
         let markers = [];
         //
@@ -126,20 +121,16 @@ initMap = () => {
 
 
 
-///credit : learned this from   kenjournal walk through: https://www.youtube.com/watch?v=kadSBAsjDXI
+///credit : learned this from   kenjournal walk through: https://www.youtube.com/watch?v=kadSBAsjDXI, Also Dough brown project coach, SallyM and Robert L [FEND] help with the error messages. 
 handleClick = location => { 
-  const {map, infowindow, markers} = this.state;
-  this.setState({infowindow})
+
+  
   this.state.markers.forEach(marker => {  
 
 
     if ((marker.venue && marker.venue.name === location) || (marker.title === location.venue.name)){ 
       
-       infowindow.setContent(`<div tabIndex="0">
-          <h3 className="title" tabindex="0">${location.venue.name}</h3>
-          <p>${location.venue.location.address}</p>
-        </div>`)
-        infowindow.open(map, marker);
+       window.google.maps.event.trigger(marker, 'click')
       
     } 
   })  
@@ -177,8 +168,6 @@ upateQuery = query =>{
 
 
   render() {
-    console.log(this.state.locations);
-
     return (
 
       <div className="App">
