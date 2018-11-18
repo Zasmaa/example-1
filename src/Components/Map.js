@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 
 
 class  Map extends React.Component{
- 
+
+
 
 
 
@@ -11,7 +12,7 @@ class  Map extends React.Component{
 	 render() {
     return (
 
-       <main>
+       <main  role="application" aria-label="map">
         <div id="map"></div>
      </main>
       
@@ -20,4 +21,4 @@ class  Map extends React.Component{
 
 }
 
-export default Map
+export default Ma
