@@ -10,6 +10,7 @@ class  Map extends React.Component{
 
 
 	 render() {
+	 	
     return (
 
        <main  role="application" aria-label="map">
@@ -21,4 +22,4 @@ class  Map extends React.Component{
 
 }
 
-export default Ma
+export default Map
