@@ -1,20 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { slide as Menu } from 'react-burger-menu'
 
 class List extends React.Component {
 
-  
  
 
  
+
 
  
 
     render() {
         return (
-          <Menu>
-            <div id="List">
-                <h2>Locations</h2>
+          <Menu tabIndex="0">
+            <div>
+
+                <h2 className= "title" tabIndex="0">Locations</h2>
                 <p> {this.props.queryString} </p>
                 <input type="text" value={this.props.queryString} onChange={e => this.props.handleChange(e.target.value)} />
                 <ol>
@@ -24,12 +25,13 @@ class List extends React.Component {
                            >
                                 <div>
                                     <p className="title"> 
-                                    Name:{""}
-                                     <a href="#" onClick={() => this.props. showInfoContent(loc)}>{loc.venue.name}</a>
                                     
-                                    </p>
-                                    <p> Address: {loc.venue.location.address }</p>
+                                    <button href="#" onClick={() => this.props.showInfoContent(loc)}> Name: { loc.venue.name}  
+                                    <p> Address: {loc.venue.location.address } </p>
+                                     </button>
 
+                                    </p>
+                                    
                                 </div>
                             </li>
                         );
