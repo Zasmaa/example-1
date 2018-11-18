@@ -9,9 +9,6 @@ In this project, the goal was to create a map app using react app. The first thi
 
 •	react-burger-menu
 
-# Create React App
-This project was bootstrapped with Create React App. You can find more information on how to perform common tasks here.
-
 # Installation 
 •	install all project dependencies with npm install
 
