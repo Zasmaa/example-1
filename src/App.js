@@ -18,18 +18,22 @@ class App extends Component {
    
  componentDidMount() {
  
-    this.getLocations ()
-    this.loadMap()
+    this.getLocations 
+    // this information is from this website : https://www.klaasnotfound.com/2016/11/06/making-google-maps-work-with-react/
+    // Connect the initMap() function within this class to the global window context,
+        // so Google Maps can invoke it
+
+     window.initMap = this.initMap
+
+
+     loadScript ("https://maps.googleapis.com/maps/api/js?key=AIzaSyDnrGYtkdccFXqQGTNEfousldIW7TdltQM&callback=initMap")
 
 
 
     
   }
 
-loadMap = () =>{
-  loadScript ("https://maps.googleapis.com/maps/api/js?key=AIzaSyDnrGYtkdccFXqQGTNEfousldIW7TdltQM&callback=initMap")
-  window.initMap = this.initMap
-}
+
 
 getLocations =() =>{
   let endPoint = "https://api.foursquare.com/v2/venues/explore?"
@@ -48,7 +52,7 @@ axios.get(endPoint + new URLSearchParams(parameters))
     locations: response.data.response.groups[0].items,
      allLocations: response.data.response.groups[0].items,
      markers: response.data.response.groups[0].items,
-   }, this.loadMap ())
+   })
   })
   .catch(error => {
     alert(error);
@@ -60,7 +64,7 @@ axios.get(endPoint + new URLSearchParams(parameters))
 //https://developers.google.com/maps/documentation/javascript/tutorial
 
 initMap = () => {
-        const map = new window.google.maps.Map(document.getElementById('map'), {
+        const map = new window.google.maps.Map(this.refs.map.getDOMNode(), {
             center: { lat: 19.8968, lng: -155.5828 },
             zoom: 10.5
         });
@@ -113,9 +117,12 @@ initMap = () => {
         }
 
         this.setState({markers})
+
+      
         
     };
 
+     
 
 
 
@@ -200,11 +207,10 @@ export default App;
 
 
 ///credit : learned this from Yahya Elharony walk through : https://www.youtube.com/watch?v=W5LhLZqj76s&t=615s and this also helped: https://stackoverflow.com/questions/7718935/load-scripts-asynchronously
-function loadScript(url){
-      var index = window.document.getElementsByTagName("script")[0];
+function loadScript(src){
+      var ref = window.document.getElementsByTagName("script")[0];
       var script = window.document.createElement("script");
-     script.src = url;
+     script.src = src;
      script.async = true;
-     script.defer = true; 
-     index.parentNode.insertBefore(script, index)
+     ref.parentNode.insertBefore(script, ref)
     };
