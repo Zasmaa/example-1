@@ -18,7 +18,7 @@ class App extends Component {
    
  componentDidMount() {
  
-    this.getLocations 
+    this.getLocations()
     // this information is from this website : https://www.klaasnotfound.com/2016/11/06/making-google-maps-work-with-react/
     // Connect the initMap() function within this class to the global window context,
         // so Google Maps can invoke it
