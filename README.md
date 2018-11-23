@@ -15,6 +15,14 @@ In this project, the goal was to create a map app using react app. The first thi
 
 •	Start the development server with npm start
 
+# npm run build or yarn build
+Builds the app for production to the build folder.
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.
+
+Your app is ready to be deployed.
+
 
 # Acknowledgment 
 In this project, many websites were a reference. The reference website is the bootstrap website, w3schools.com, and MDN web doc. Amongst other additional resources, utilize were Technical Walk-throughs & Webinars and youtube
