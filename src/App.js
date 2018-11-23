@@ -5,59 +5,51 @@ import Header from './Components/Header';
 import Content from './Components/Content';
 import List from './Components/List'
 
-const ARC_DE_TRIOMPHE_POSITION = {
- lat: 19.8968, lng: -155.5828 
-};
-
-const EIFFEL_TOWER_POSITION = {
- lat: 19.8968, lng: -155.5828 
-};
-
-
 class App extends Component {
-
-   constructor() {
-    super();
-    this.panToArcDeTriomphe = this.panToArcDeTriomphe.bind(this);
-  }
-
-
 
   state = {
     locations : [],
     markers: [],
     query: "",
      allLocations: [],
+     pickId: null,
+     vitalMarker: null,
+     selectedId: null,
+    activeMarker: null
 
  
   }
+
+ realMarkers = [];
    
  componentDidMount() {
  
     this.getLocations ()
-    // this information is from this website : https://www.klaasnotfound.com/2016/11/06/making-google-maps-work-with-react/
-    // Connect the initMap() function within this class to the global window context,
-        // so Google Maps can invoke it
+   
 
-     window.initMap = this.initMap
+    //https://developers.google.com/maps/documentation/javascript/events#auth-errors
 
+window.gm_authFailure = () => {
+  // do something for gmaps error
+alert('error');
 
-     loadScript ("https://maps.googleapis.com/maps/api/js?key=AIzaSyDnrGYtkdccFXqQGTNEfousldIW7TdltQM&callback=initMap");
- this.map = new window.google.maps.Map(this.refs.map, {
-      center: { lat: 19.8968, lng: -155.5828 },
-      zoom: 16
-    });
-
+}
 
     
   }
 
-  panToArcDeTriomphe() {
-    console.log(this)
-    this.map.panTo(ARC_DE_TRIOMPHE_POSITION);
-  }
+   saveRealMarker = marker => {
+    if (this.realMarkers.indexOf(marker) === -1 && marker !== null) 
+      this.realMarkers.push(marker);
+    }
 
 
+
+
+loadMap = () =>{
+  loadScript ("https://maps.googleapis.com/maps/api/js?key=AIzaSyDnrGYtkdccFXqQGTNEfousldIW7TdltQM&callback=initMap")
+  window.initMap = this.initMap
+}
 
 getLocations =() =>{
   let endPoint = "https://api.foursquare.com/v2/venues/explore?"
@@ -76,7 +68,7 @@ axios.get(endPoint + new URLSearchParams(parameters))
     locations: response.data.response.groups[0].items,
      allLocations: response.data.response.groups[0].items,
      markers: response.data.response.groups[0].items,
-   })
+   }, this.loadMap ())
   })
   .catch(error => {
     alert(error);
@@ -88,8 +80,9 @@ axios.get(endPoint + new URLSearchParams(parameters))
 //https://developers.google.com/maps/documentation/javascript/tutorial
 
 initMap = () => {
-  const mapErr = document.getElementById("map");
-        const map = new window.google.maps.Map(mapErr, {
+        const map = new window.google.maps.Map(document.getElementById('map'), {
+            center: { lat: 19.8968, lng: -155.5828 },
+            zoom: 10.5
         });
         //https://developers.google.com/maps/documentation/javascript/markers
 
@@ -128,6 +121,7 @@ initMap = () => {
             if (infowindow.marker !== marker) {
                 infowindow.marker = marker;
                 infowindow.setContent(`
+
                   '<div>'  
                   <p>${marker.title} </p><p> ${marker.location} </p>  '</div'`);
                 infowindow.open(map, marker);
@@ -139,12 +133,9 @@ initMap = () => {
         }
 
         this.setState({markers})
-
-      
         
     };
 
-     
 
 
 
@@ -169,11 +160,6 @@ handleClick = location => {
 
 
  
-  
-
-
-
-
 upateQuery = query =>{
   this.setState({query})
   if (query) {
@@ -187,18 +173,25 @@ upateQuery = query =>{
 
   return locations.filter(location => location.venue.name.toLowerCase().includes(query.toLowerCase()))
  }
+
+
  
 
 
-
+clickMarker = (id) => {
+    // Set the state to reflect the selected marker id
+    const marker = this.realMarkers.filter(marker => marker.marker.id === id)[0];
+    this.setState({
+      selectedId: id,
+      activeMarker: marker
+    })
+  }
    
 
 
 
 
   render() {
-
-    
     return (
 
       <div className="App">
@@ -208,6 +201,10 @@ upateQuery = query =>{
 
       queryString={this.state.query}
       handleChange={this.upateQuery}
+
+
+
+     
        />
      
       <Header/>
@@ -231,10 +228,11 @@ export default App;
 
 
 ///credit : learned this from Yahya Elharony walk through : https://www.youtube.com/watch?v=W5LhLZqj76s&t=615s and this also helped: https://stackoverflow.com/questions/7718935/load-scripts-asynchronously
-function loadScript(src){
-      var ref = window.document.getElementsByTagName("script")[0];
+function loadScript(url){
+      var index = window.document.getElementsByTagName("script")[0];
       var script = window.document.createElement("script");
-     script.src = src;
+     script.src = url;
      script.async = true;
-     ref.parentNode.insertBefore(script, ref)
+     script.defer = true; 
+     index.parentNode.insertBefore(script, index)
     };
