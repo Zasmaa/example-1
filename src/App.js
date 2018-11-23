@@ -5,7 +5,23 @@ import Header from './Components/Header';
 import Content from './Components/Content';
 import List from './Components/List'
 
+const ARC_DE_TRIOMPHE_POSITION = {
+ lat: 19.8968, lng: -155.5828 
+};
+
+const EIFFEL_TOWER_POSITION = {
+ lat: 19.8968, lng: -155.5828 
+};
+
+
 class App extends Component {
+
+   constructor() {
+    super();
+    this.panToArcDeTriomphe = this.panToArcDeTriomphe.bind(this);
+  }
+
+
 
   state = {
     locations : [],
@@ -18,7 +34,7 @@ class App extends Component {
    
  componentDidMount() {
  
-    this.getLocations()
+    this.getLocations ()
     // this information is from this website : https://www.klaasnotfound.com/2016/11/06/making-google-maps-work-with-react/
     // Connect the initMap() function within this class to the global window context,
         // so Google Maps can invoke it
@@ -26,11 +42,19 @@ class App extends Component {
      window.initMap = this.initMap
 
 
-     loadScript ("https://maps.googleapis.com/maps/api/js?key=AIzaSyDnrGYtkdccFXqQGTNEfousldIW7TdltQM&callback=initMap")
-
+     loadScript ("https://maps.googleapis.com/maps/api/js?key=AIzaSyDnrGYtkdccFXqQGTNEfousldIW7TdltQM&callback=initMap");
+ this.map = new window.google.maps.Map(this.refs.map, {
+      center: { lat: 19.8968, lng: -155.5828 },
+      zoom: 16
+    });
 
 
     
+  }
+
+  panToArcDeTriomphe() {
+    console.log(this)
+    this.map.panTo(ARC_DE_TRIOMPHE_POSITION);
   }
 
 
@@ -64,9 +88,8 @@ axios.get(endPoint + new URLSearchParams(parameters))
 //https://developers.google.com/maps/documentation/javascript/tutorial
 
 initMap = () => {
-        const map = new window.google.maps.Map(this.refs.map.getDOMNode(), {
-            center: { lat: 19.8968, lng: -155.5828 },
-            zoom: 10.5
+  const mapErr = document.getElementById("map");
+        const map = new window.google.maps.Map(mapErr, {
         });
         //https://developers.google.com/maps/documentation/javascript/markers
 
@@ -105,7 +128,6 @@ initMap = () => {
             if (infowindow.marker !== marker) {
                 infowindow.marker = marker;
                 infowindow.setContent(`
-
                   '<div>'  
                   <p>${marker.title} </p><p> ${marker.location} </p>  '</div'`);
                 infowindow.open(map, marker);
@@ -175,6 +197,8 @@ upateQuery = query =>{
 
 
   render() {
+
+    
     return (
 
       <div className="App">
