@@ -30,7 +30,7 @@ class App extends Component {
     //https://developers.google.com/maps/documentation/javascript/events#auth-errors
 
 window.gm_authFailure = () => {
-  // do something for gmaps error
+ // add the error message for Google Maps API data requests fail 
 alert('error');
 
 }
@@ -38,8 +38,11 @@ alert('error');
     
   }
 
-   saveRealMarker = marker => {
-    if (this.realMarkers.indexOf(marker) === -1 && marker !== null) 
+ //credit : learned this from dough brown 
+
+   saverealmarker = marker => {
+    console.log(this.realMarkers)
+    if ( marker && this.realMarkers.indexOf(marker) === -1 ) 
       this.realMarkers.push(marker);
     }
 
@@ -163,10 +166,14 @@ handleClick = location => {
 upateQuery = query =>{
   this.setState({query})
   if (query) {
-    this.setState({locations: this.filterLocations(query, this.state.allLocations)})
+    this.setState({locations: this.filterLocations(query, this.state.locations)})
   }else{
-    this.setState({locations:this.state.allLocations})
+    this.setState({locations:this.state.locations})
   }
+ }
+
+ clearQuery = () => {
+  this.setState({query: ''})
  }
 
  filterLocations =(query, locations) => {
@@ -178,7 +185,7 @@ upateQuery = query =>{
  
 
 
-clickMarker = (id) => {
+  clickmarker = (id) => {
     // Set the state to reflect the selected marker id
     const marker = this.realMarkers.filter(marker => marker.marker.id === id)[0];
     this.setState({
@@ -201,8 +208,8 @@ clickMarker = (id) => {
 
       queryString={this.state.query}
       handleChange={this.upateQuery}
-
-
+ clickmarker={this.clickmarker}
+ 
 
      
        />
