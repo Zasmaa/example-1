@@ -40,7 +40,7 @@ alert('error');
 
  //credit : learned this from dough brown 
 
-   saverealmarker = marker => {
+   saveRealMarker = marker => {
     console.log(this.realMarkers)
     if ( marker && this.realMarkers.indexOf(marker) === -1 ) 
       this.realMarkers.push(marker);
@@ -168,13 +168,11 @@ upateQuery = query =>{
   if (query) {
     this.setState({locations: this.filterLocations(query, this.state.locations)})
   }else{
-    this.setState({locations:this.state.locations})
+    this.setState({locations:this.state.allLocations})
   }
  }
 
- clearQuery = () => {
-  this.setState({query: ''})
- }
+
 
  filterLocations =(query, locations) => {
 
@@ -185,7 +183,7 @@ upateQuery = query =>{
  
 
 
-  clickmarker = (id) => {
+  clickMarker = (id) => {
     // Set the state to reflect the selected marker id
     const marker = this.realMarkers.filter(marker => marker.marker.id === id)[0];
     this.setState({
@@ -208,8 +206,8 @@ upateQuery = query =>{
 
       queryString={this.state.query}
       handleChange={this.upateQuery}
- clickmarker={this.clickmarker}
- 
+ clickMarker={this.clickMarker}
+
 
      
        />
