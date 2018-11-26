@@ -12,15 +12,12 @@ class App extends Component {
     markers: [],
     query: "",
      allLocations: [],
-     pickId: null,
-     vitalMarker: null,
-     selectedId: null,
-    activeMarker: null
+    
 
  
   }
 
- realMarkers = [];
+
    
  componentDidMount() {
  
@@ -38,13 +35,7 @@ alert('error');
     
   }
 
- //credit : learned this from dough brown 
-
-   saveRealMarker = marker => {
-    console.log(this.realMarkers)
-    if ( marker && this.realMarkers.indexOf(marker) === -1 ) 
-      this.realMarkers.push(marker);
-    }
+ 
 
 
 
@@ -183,14 +174,7 @@ upateQuery = query =>{
  
 
 
-  clickMarker = (id) => {
-    // Set the state to reflect the selected marker id
-    const marker = this.realMarkers.filter(marker => marker.marker.id === id)[0];
-    this.setState({
-      selectedId: id,
-      activeMarker: marker
-    })
-  }
+
    
 
 
@@ -206,7 +190,7 @@ upateQuery = query =>{
 
       queryString={this.state.query}
       handleChange={this.upateQuery}
- clickMarker={this.clickMarker}
+ 
 
 
      
