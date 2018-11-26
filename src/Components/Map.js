@@ -15,7 +15,7 @@ class  Map extends React.Component{
 
        <main  role="application" aria-label="map">
         <div id="map"
- }
+
         
         ></div>
      </main>
@@ -26,3 +26,4 @@ class  Map extends React.Component{
 }
 
 export default Map
+
