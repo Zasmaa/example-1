@@ -15,8 +15,7 @@ class  Map extends React.Component{
 
        <main  role="application" aria-label="map">
         <div id="map"
-  saveRealMarker={this.saveRealMarker}
-          clickMarker={this.clickMarker}
+ }
         
         ></div>
      </main>
