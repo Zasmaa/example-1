@@ -172,6 +172,7 @@ upateQuery = query =>{
   }else{
     this.setState({locations:this.state.allLocations})
   }
+  this.clickMarker()
  }
 
 
@@ -219,6 +220,7 @@ upateQuery = query =>{
       handleChange={this.upateQuery}
  clickMarker={this.state.clickMarker}
 saveRealMarker={this.saveRealMarker}
+realMarkers={this.state.realMarkers}
 
      
        />
