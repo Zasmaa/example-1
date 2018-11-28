@@ -195,9 +195,9 @@ upateQuery = query =>{
  
 
 
-  clickMarker = (id) => {
+   clickMarker = (id) => {
     // Set the state to reflect the selected marker id
-    const marker = this.realMarkers.filter(marker => marker.marker.id === id)[0];
+    const marker = this.realMarkers && this.realMarkers.filter(marker => marker.marker.id === id)[0];
     this.setState({
       selectedId: id,
       activeMarker: marker
