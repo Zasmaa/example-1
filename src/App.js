@@ -12,6 +12,7 @@ class App extends Component {
     query: "",
     allLocations: [],
     newLocations: [],
+    filteredLocations: []
    
   };
 
@@ -52,7 +53,8 @@ class App extends Component {
           {
             locations: response.data.response.groups[0].items,
             allLocations: response.data.response.groups[0].items,
-            markers: response.data.response.groups[0].items
+            filteredLocations: response.data.response.groups[0].items.slice(),
+            markers: response.data.response.groups[0].items,
           },
           this.loadMap()
         );
@@ -136,45 +138,46 @@ class App extends Component {
     });
   };
 
-  upateQuery = query => {
+   upateQuery = query => {
     this.setState({ query });
 
     if (query) {
       this.filterLocations(query,  this.state.locations);
-    } else {
-      this.setState({ locations: this.state.allLocations });
+
+
     }
+   
+
+     else {
+      this.setState({ locations: this.state.allLocations });
+      this.state.markers.forEach(marker => marker.setVisible(true))
+    }
+
   };
 
-  handleMarkerVisibility = locations => {
-    locations.forEach(location => {
-      console.log(location);
-      this.state.markers.forEach(marker => {
-        console.log(marker);
-        //  ---matching query input ---
-        if (marker.title === location.venue.name) {
-          marker.isVisible = true;
-        } else {
-          marker.isVisible = false;
-        }
-      });
-    });
-  };
+ 
 
   filterLocations = query => {
     console.log(query)
-    console.log(this.state.locations)
+    let findingMarkers; 
+  
    
-    const locations = [...this.state.locations];
-    const newLocations = locations.map(location => {
-      if (location.venue.name.toLowerCase().includes(query.toLowerCase())) {
-        return location;
-      }
-      return location;
-    });
-     console.log(newLocations)
-    this.setState({ locations: newLocations });
+    const locations = this.state.locations.slice();
+    console.log("locations: ", locations);
+    const newLocations = locations.filter(location => 
+      location.venue.name.toLowerCase().includes(query.toLowerCase())
+    );
+    console.log("newLocations: ", newLocations);
+    this.setState({ filteredLocations: newLocations });
+
+ findingMarkers = this.state.markers.filter(marker => 
+  newLocations.every( myLocations => myLocations.venue.name !== marker.title))
+findingMarkers.forEach(marker => marker.setVisible(false))
+this.setState({findingMarkers})
+
+
   };
+   
 
  
 
@@ -182,7 +185,7 @@ class App extends Component {
     return (
       <div className="App">
         <List
-          locations={this.state.locations}
+          locations={this.state.filteredLocations}
           showInfoContent={this.handleClick}
           queryString={this.state.query}
           handleChange={this.upateQuery}
