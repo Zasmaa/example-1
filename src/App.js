@@ -158,16 +158,14 @@ class App extends Component {
  
 
   filterLocations = query => {
-    console.log(query)
+    
     let findingMarkers; 
   
    
     const locations = this.state.locations.slice();
-    console.log("locations: ", locations);
     const newLocations = locations.filter(location => 
       location.venue.name.toLowerCase().includes(query.toLowerCase())
     );
-    console.log("newLocations: ", newLocations);
     this.setState({ filteredLocations: newLocations });
 
  findingMarkers = this.state.markers.filter(marker => 
