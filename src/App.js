@@ -17,9 +17,8 @@ class App extends Component {
      selectedId: null,
     activeMarker: null,
      realMarkers:[],
-     match: []
+     match: [],
 
- 
   }
  
    
@@ -164,16 +163,33 @@ handleClick = location => {
 
 
  
- 
 upateQuery = query =>{
   this.setState({query})
+  let locations = []
+
+     
+
   if (query) {
     this.setState({locations: this.filterLocations(query, this.state.locations)})
   }else{
     this.setState({locations:this.state.allLocations})
   }
-  this.clickMarker()
- }
+  
+
+
+  this.state.markers.map((marker) => {
+  //  ---matching query input ---
+  if ((marker.venue && marker.venue.name === locations) || (marker.title === locations.venue.name)){
+    marker.isVisible= true 
+
+  } else{
+    marker.isVisible = false
+  }
+
+   
+})
+ } 
+
 
 
 
@@ -181,6 +197,8 @@ upateQuery = query =>{
 
   return locations.filter(location => location.venue.name.toLowerCase().includes(query.toLowerCase()))
  }
+
+
 
 
 
