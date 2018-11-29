@@ -159,7 +159,6 @@ class App extends Component {
         }
       });
     });
-    this.filterLocations()
   };
 
   filterLocations = query => {
